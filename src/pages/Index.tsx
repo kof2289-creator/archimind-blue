@@ -135,7 +135,7 @@ const Index = () => {
                 </label>
                 <Input
                   id="businessArea"
-                  placeholder="예: QA, 생산관리, 물류 등"
+                  placeholder="예: QA, 생산계획, MPS 등"
                   value={businessArea}
                   onChange={(e) => setBusinessArea(e.target.value)}
                   className="bg-background/50 border-border focus:border-primary transition-smooth"
@@ -150,7 +150,7 @@ const Index = () => {
                 </label>
                 <Textarea
                   id="painPoints"
-                  placeholder="예: 시스템 자동화가 안되어 있고 수기로 작성하는 프로세스의 많음"
+                  placeholder="예: 장비마다 공급사(SEMI eq.)가 달라 인터페이스가 표준화되어 있지 않음"
                   value={painPoints}
                   onChange={(e) => setPainPoints(e.target.value)}
                   className="min-h-[120px] resize-none bg-background/50 border-border focus:border-primary transition-smooth"
