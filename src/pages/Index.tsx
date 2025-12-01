@@ -1,11 +1,115 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Card } from "@/components/ui/card";
+import { Loader2, Sparkles } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+import ReactMarkdown from "react-markdown";
 
 const Index = () => {
+  const [workflow, setWorkflow] = useState("");
+  const [analysis, setAnalysis] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleAnalyze = async () => {
+    if (!workflow.trim()) {
+      toast.error("워크플로우를 입력해주세요");
+      return;
+    }
+
+    setIsLoading(true);
+    setAnalysis("");
+
+    try {
+      const { data, error } = await supabase.functions.invoke("analyze-architecture", {
+        body: { workflow },
+      });
+
+      if (error) {
+        console.error("Function error:", error);
+        toast.error(error.message || "분석 중 오류가 발생했습니다");
+        return;
+      }
+
+      if (data?.analysis) {
+        setAnalysis(data.analysis);
+        toast.success("분석이 완료되었습니다");
+      }
+    } catch (err) {
+      console.error("Error:", err);
+      toast.error("분석 요청 중 오류가 발생했습니다");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/20">
+      <div className="container mx-auto px-4 py-8 md:py-16 max-w-4xl">
+        {/* Header */}
+        <header className="text-center mb-12 md:mb-16 space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent shadow-glow mb-4">
+            <Sparkles className="w-8 h-8 text-primary-foreground" />
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            솔루션 아키텍쳐 자동 구성
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            업무 워크플로우를 입력하면 AI가 확장 가능한 솔루션 아키텍쳐를 자동으로 생성합니다
+          </p>
+        </header>
+
+        {/* Input Section */}
+        <Card className="p-6 md:p-8 mb-8 shadow-soft border-border/50 backdrop-blur-sm bg-card/80 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-150">
+          <div className="space-y-4">
+            <label htmlFor="workflow" className="block text-sm font-medium text-foreground">
+              업무 워크플로우 입력
+            </label>
+            <Textarea
+              id="workflow"
+              placeholder="예: 고객 주문 접수부터 배송까지의 전체 프로세스를 관리하는 시스템이 필요합니다. 주문 관리, 재고 관리, 배송 추적 기능이 포함되어야 합니다."
+              value={workflow}
+              onChange={(e) => setWorkflow(e.target.value)}
+              className="min-h-[160px] resize-none bg-background/50 border-border focus:border-primary transition-smooth"
+              disabled={isLoading}
+            />
+            <Button
+              onClick={handleAnalyze}
+              disabled={isLoading || !workflow.trim()}
+              className="w-full bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-smooth shadow-soft"
+              size="lg"
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  분석 중...
+                </>
+              ) : (
+                <>
+                  <Sparkles className="mr-2 h-5 w-5" />
+                  아키텍쳐 분석 시작
+                </>
+              )}
+            </Button>
+          </div>
+        </Card>
+
+        {/* Results Section */}
+        {analysis && (
+          <Card className="p-6 md:p-8 shadow-soft border-border/50 backdrop-blur-sm bg-card/80 animate-in fade-in slide-in-from-bottom-8 duration-700">
+            <div className="prose prose-sm md:prose-base max-w-none dark:prose-invert prose-headings:text-foreground prose-p:text-foreground/90 prose-strong:text-foreground prose-ul:text-foreground/90 prose-li:text-foreground/90">
+              <ReactMarkdown>{analysis}</ReactMarkdown>
+            </div>
+          </Card>
+        )}
+
+        {/* Empty State */}
+        {!analysis && !isLoading && (
+          <div className="text-center py-12 text-muted-foreground animate-in fade-in duration-700 delay-300">
+            <p className="text-sm">워크플로우를 입력하고 분석을 시작하세요</p>
+          </div>
+        )}
       </div>
     </div>
   );
