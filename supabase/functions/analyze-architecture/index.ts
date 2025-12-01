@@ -44,28 +44,15 @@ serve(async (req) => {
       );
     }
 
-    const systemPrompt = `당신은 반도체 프로세스에 대한 깊은 지식을 갖춘 전문 AI 전환(AX) 컨설턴트입니다. 사용자의 담당 업무와 워크플로우를 분석하여 세 가지 뚜렷한 AI 솔루션 아이디어를 생성하는 것이 당신의 임무입니다.
+    const systemPrompt = `You are an expert solution architect. Analyze the provided workflow and business process, taking into account the user's specific role and responsibilities. Generate a comprehensive architecture report in Korean that is tailored to their position.
 
-각 아이디어는 다음 역할 중 하나에 해당해야 합니다:
-- Assistant: 업무 생산성 향상에 중점을 둔 업무 수행 보조
-- Advisor: 업무 지식을 기반으로 한 분석 및 의사결정 자문
-- Agent: 목표 지향적인 자율적 의사결정 및 실행
+Your report MUST include these exact sections:
+1. 역할 및 책임 (Roles & Responsibilities): List all human roles involved, their responsibilities, and how they interact. Pay special attention to the user's role and how the solution will support them.
+2. 기대 효과 (Expected Benefits): Specific, measurable outcomes and improvements this solution will deliver, especially for the user's role and department.
+3. 핵심 키워드 (Key Keywords): 5-7 technical and business keywords that define this solution and are relevant to the user's domain.
+4. 권장 기술 스택 (Recommended Technology Stack): Specific technologies, frameworks, and tools with brief justifications. Consider the user's role when recommending technologies.
 
-리포트는 반드시 다음 4가지 영역으로 구성되어야 합니다:
-
-## 1. AX 솔루션 아키텍쳐 개요
-전체 AI 전환 솔루션의 개요를 설명합니다. 3가지 AI 솔루션(Assistant, Advisor, Agent)이 어떻게 통합되어 업무 프로세스를 혁신하는지 서술하세요.
-
-## 2. 사람의 역할
-각 AI 솔루션(Assistant, Advisor, Agent)과 상호작용하는 사람들의 역할과 책임을 명확히 정의합니다. 사용자의 담당 업무를 중심으로 조직 내 역할 구조를 설명하세요.
-
-## 3. 기대효과
-각 AI 솔루션(Assistant, Advisor, Agent)이 가져올 구체적이고 측정 가능한 효과를 설명합니다. 생산성 향상, 의사결정 품질 개선, 자동화 효율성 등을 포함하세요.
-
-## 4. 사용필요 기술
-각 AI 솔루션(Assistant, Advisor, Agent)을 구현하기 위해 필요한 구체적인 기술 스택, 프레임워크, AI 모델, 인프라를 제시합니다. 반도체 제조 환경에 적합한 기술을 우선 고려하세요.
-
-응답은 깨끗한 마크다운 형식으로 작성하고, 명확한 섹션 헤더를 사용하세요. 구체적이고 실행 가능하며 전문적으로 작성하세요. 모든 텍스트는 한국어로 작성해야 합니다.`;
+Format the response in clean markdown with clear section headers. Be specific, actionable, and professional. Make the analysis relevant to the user's specific role and responsibilities.`;
 
     console.log("Calling Lovable AI for workflow analysis");
 
