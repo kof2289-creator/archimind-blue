@@ -1,20 +1,38 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { Loader2, Sparkles } from "lucide-react";
+import { Loader2, Sparkles, Briefcase, Workflow } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import ReactMarkdown from "react-markdown";
+import { z } from "zod";
+
+const inputSchema = z.object({
+  role: z.string()
+    .trim()
+    .min(1, "담당 업무를 입력해주세요")
+    .max(200, "담당 업무는 200자 이내로 입력해주세요"),
+  workflow: z.string()
+    .trim()
+    .min(10, "워크플로우를 최소 10자 이상 입력해주세요")
+    .max(2000, "워크플로우는 2000자 이내로 입력해주세요"),
+});
 
 const Index = () => {
+  const [role, setRole] = useState("");
   const [workflow, setWorkflow] = useState("");
   const [analysis, setAnalysis] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleAnalyze = async () => {
-    if (!workflow.trim()) {
-      toast.error("워크플로우를 입력해주세요");
+    // Validate inputs
+    const validation = inputSchema.safeParse({ role, workflow });
+    
+    if (!validation.success) {
+      const firstError = validation.error.errors[0];
+      toast.error(firstError.message);
       return;
     }
 
@@ -23,7 +41,10 @@ const Index = () => {
 
     try {
       const { data, error } = await supabase.functions.invoke("analyze-architecture", {
-        body: { workflow },
+        body: { 
+          role: validation.data.role,
+          workflow: validation.data.workflow 
+        },
       });
 
       if (error) {
@@ -62,21 +83,47 @@ const Index = () => {
 
         {/* Input Section */}
         <Card className="p-6 md:p-8 mb-8 shadow-soft border-border/50 backdrop-blur-sm bg-card/80 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-150">
-          <div className="space-y-4">
-            <label htmlFor="workflow" className="block text-sm font-medium text-foreground">
-              업무 워크플로우 입력
-            </label>
-            <Textarea
-              id="workflow"
-              placeholder="예: 고객 주문 접수부터 배송까지의 전체 프로세스를 관리하는 시스템이 필요합니다. 주문 관리, 재고 관리, 배송 추적 기능이 포함되어야 합니다."
-              value={workflow}
-              onChange={(e) => setWorkflow(e.target.value)}
-              className="min-h-[160px] resize-none bg-background/50 border-border focus:border-primary transition-smooth"
-              disabled={isLoading}
-            />
+          <div className="space-y-6">
+            {/* Role Input */}
+            <div className="space-y-2">
+              <label htmlFor="role" className="flex items-center text-sm font-medium text-foreground">
+                <Briefcase className="w-4 h-4 mr-2 text-primary" />
+                담당 업무
+              </label>
+              <Input
+                id="role"
+                placeholder="예: 물류 관리자, IT 시스템 운영자, 영업 팀장 등"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                className="bg-background/50 border-border focus:border-primary transition-smooth"
+                disabled={isLoading}
+                maxLength={200}
+              />
+            </div>
+
+            {/* Workflow Input */}
+            <div className="space-y-2">
+              <label htmlFor="workflow" className="flex items-center text-sm font-medium text-foreground">
+                <Workflow className="w-4 h-4 mr-2 text-primary" />
+                업무 워크플로우
+              </label>
+              <Textarea
+                id="workflow"
+                placeholder="예: 고객 주문 접수부터 배송까지의 전체 프로세스를 관리하는 시스템이 필요합니다. 주문 관리, 재고 관리, 배송 추적 기능이 포함되어야 합니다."
+                value={workflow}
+                onChange={(e) => setWorkflow(e.target.value)}
+                className="min-h-[160px] resize-none bg-background/50 border-border focus:border-primary transition-smooth"
+                disabled={isLoading}
+                maxLength={2000}
+              />
+              <p className="text-xs text-muted-foreground text-right">
+                {workflow.length}/2000
+              </p>
+            </div>
+
             <Button
               onClick={handleAnalyze}
-              disabled={isLoading || !workflow.trim()}
+              disabled={isLoading || !workflow.trim() || !role.trim()}
               className="w-full bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-smooth shadow-soft"
               size="lg"
             >
