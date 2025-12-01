@@ -74,10 +74,10 @@ const Index = () => {
             <Sparkles className="w-8 h-8 text-primary-foreground" />
           </div>
           <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            솔루션 아키텍쳐 자동 구성
+            삼성전자 DS Agent Architect AI
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            업무 워크플로우를 입력하면 AI가 확장 가능한 솔루션 아키텍쳐를 자동으로 생성합니다
+            업무 워크플로우를 입력하면 AI가 최적화된 솔루션 아키텍쳐를 자동으로 생성합니다
           </p>
         </header>
 
@@ -92,7 +92,7 @@ const Index = () => {
               </label>
               <Input
                 id="role"
-                placeholder="예: 물류 관리자, IT 시스템 운영자, 영업 팀장 등"
+                placeholder="예: FAB 공정 엔지니어, 반도체 품질 관리자, Wafer 생산 관리자 등"
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
                 className="bg-background/50 border-border focus:border-primary transition-smooth"
@@ -109,7 +109,7 @@ const Index = () => {
               </label>
               <Textarea
                 id="workflow"
-                placeholder="예: 고객 주문 접수부터 배송까지의 전체 프로세스를 관리하는 시스템이 필요합니다. 주문 관리, 재고 관리, 배송 추적 기능이 포함되어야 합니다."
+                placeholder="예: Wafer 투입부터 최종 테스트까지의 반도체 제조 공정을 관리합니다. 포토리소그래피, 에칭, 이온 주입, CVD/PVD 증착, CMP 평탄화 공정의 실시간 모니터링과 불량 검출 시스템이 필요합니다."
                 value={workflow}
                 onChange={(e) => setWorkflow(e.target.value)}
                 className="min-h-[160px] resize-none bg-background/50 border-border focus:border-primary transition-smooth"
@@ -135,7 +135,7 @@ const Index = () => {
               ) : (
                 <>
                   <Sparkles className="mr-2 h-5 w-5" />
-                  아키텍쳐 분석 시작
+                  솔루션 아키텍쳐 생성
                 </>
               )}
             </Button>
