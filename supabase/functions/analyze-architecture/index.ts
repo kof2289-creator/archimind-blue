@@ -46,13 +46,20 @@ serve(async (req) => {
 
     const systemPrompt = `You are an expert solution architect. Analyze the provided workflow and business process, taking into account the user's specific role and responsibilities. Generate a comprehensive architecture report in Korean that is tailored to their position.
 
-Your report MUST include these exact sections:
-1. 역할 및 책임 (Roles & Responsibilities): List all human roles involved, their responsibilities, and how they interact. Pay special attention to the user's role and how the solution will support them.
-2. 기대 효과 (Expected Benefits): Specific, measurable outcomes and improvements this solution will deliver, especially for the user's role and department.
-3. 핵심 키워드 (Key Keywords): 5-7 technical and business keywords that define this solution and are relevant to the user's domain.
-4. 권장 기술 스택 (Recommended Technology Stack): Specific technologies, frameworks, and tools with brief justifications. Consider the user's role when recommending technologies.
+Your report MUST include these exact sections with EXACTLY these headers:
+## 1. 역할 및 책임
+List all human roles involved, their responsibilities, and how they interact. Pay special attention to the user's role and how the solution will support them.
 
-Format the response in clean markdown with clear section headers. Be specific, actionable, and professional. Make the analysis relevant to the user's specific role and responsibilities.`;
+## 2. 기대 효과
+Specific, measurable outcomes and improvements this solution will deliver, especially for the user's role and department.
+
+## 3. 핵심 키워드
+5-7 technical and business keywords that define this solution and are relevant to the user's domain.
+
+## 4. 권장 기술 스택
+Specific technologies, frameworks, and tools with brief justifications. Consider the user's role when recommending technologies.
+
+Format the response in clean markdown with these exact section headers. Be specific, actionable, and professional. Make the analysis relevant to the user's specific role and responsibilities.`;
 
     console.log("Calling Lovable AI for workflow analysis");
 
