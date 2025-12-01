@@ -1,0 +1,4 @@
+project_id = "flyzltapeswvsrkfdtii"
+
+[functions.analyze-architecture]
+verify_jwt = false
