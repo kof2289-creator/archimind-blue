@@ -20,11 +20,63 @@ const inputSchema = z.object({
     .max(2000, "워크플로우는 2000자 이내로 입력해주세요"),
 });
 
+interface AnalysisSection {
+  title: string;
+  content: string;
+  colorClass: string;
+  bgClass: string;
+  borderClass: string;
+}
+
 const Index = () => {
   const [role, setRole] = useState("");
   const [workflow, setWorkflow] = useState("");
   const [analysis, setAnalysis] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const parseAnalysis = (text: string): AnalysisSection[] => {
+    const sections = [
+      { 
+        regex: /##\s*1\.\s*역할\s*및\s*책임([\s\S]*?)(?=##\s*2\.|$)/i,
+        title: "역할 및 책임",
+        colorClass: "text-primary",
+        bgClass: "bg-primary/5",
+        borderClass: "border-primary/20"
+      },
+      { 
+        regex: /##\s*2\.\s*기대\s*효과([\s\S]*?)(?=##\s*3\.|$)/i,
+        title: "기대 효과",
+        colorClass: "text-success",
+        bgClass: "bg-success/5",
+        borderClass: "border-success/20"
+      },
+      { 
+        regex: /##\s*3\.\s*핵심\s*키워드([\s\S]*?)(?=##\s*4\.|$)/i,
+        title: "핵심 키워드",
+        colorClass: "text-destructive",
+        bgClass: "bg-destructive/5",
+        borderClass: "border-destructive/20"
+      },
+      { 
+        regex: /##\s*4\.\s*권장\s*기술\s*스택([\s\S]*?)$/i,
+        title: "권장 기술 스택",
+        colorClass: "text-foreground",
+        bgClass: "bg-muted/30",
+        borderClass: "border-border"
+      }
+    ];
+
+    return sections.map(section => {
+      const match = text.match(section.regex);
+      return {
+        title: section.title,
+        content: match ? match[1].trim() : "",
+        colorClass: section.colorClass,
+        bgClass: section.bgClass,
+        borderClass: section.borderClass
+      };
+    }).filter(s => s.content);
+  };
 
   const handleAnalyze = async () => {
     // Validate inputs
@@ -144,11 +196,21 @@ const Index = () => {
 
         {/* Results Section */}
         {analysis && (
-          <Card className="p-6 md:p-8 shadow-soft border-border/50 backdrop-blur-sm bg-card/80 animate-in fade-in slide-in-from-bottom-8 duration-700">
-            <div className="prose prose-sm md:prose-base max-w-none dark:prose-invert prose-headings:text-foreground prose-p:text-foreground/90 prose-strong:text-foreground prose-ul:text-foreground/90 prose-li:text-foreground/90">
-              <ReactMarkdown>{analysis}</ReactMarkdown>
-            </div>
-          </Card>
+          <div className="space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-700">
+            {parseAnalysis(analysis).map((section, index) => (
+              <Card 
+                key={index}
+                className={`p-6 md:p-8 shadow-soft backdrop-blur-sm border-2 ${section.bgClass} ${section.borderClass} transition-smooth`}
+              >
+                <h2 className={`text-2xl md:text-3xl font-bold mb-4 ${section.colorClass}`}>
+                  {section.title}
+                </h2>
+                <div className={`prose prose-sm md:prose-base max-w-none dark:prose-invert prose-p:text-foreground/90 prose-ul:text-foreground/90 prose-li:text-foreground/90 prose-strong:font-bold prose-strong:${section.colorClass} prose-strong:bg-${section.colorClass.replace('text-', '')}/10 prose-strong:px-1.5 prose-strong:py-0.5 prose-strong:rounded`}>
+                  <ReactMarkdown>{section.content}</ReactMarkdown>
+                </div>
+              </Card>
+            ))}
+          </div>
         )}
 
         {/* Empty State */}
