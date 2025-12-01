@@ -10,12 +10,12 @@ import { toast } from "sonner";
 import html2canvas from "html2canvas";
 
 interface AXIdea {
-  title: string;
-  role: "Assistant" | "Advisor" | "Agent";
-  description: string;
-  userRole: string;
-  expectedEffect: string;
-  effectDetails: string[];
+  solutionTitle: string;
+  process: string;
+  category: "Assistant" | "Advisor" | "Agent";
+  solutionOverview: string;
+  humanRole: string;
+  expectedEffects: string[];
   keywords: string[];
   technologies: string[];
 }
@@ -97,7 +97,7 @@ const Index = () => {
       });
 
       const link = document.createElement("a");
-      link.download = `ax-idea-${ideas[index].role}.png`;
+      link.download = `ax-idea-${ideas[index].category}.png`;
       link.href = canvas.toDataURL();
       link.click();
 
@@ -213,7 +213,7 @@ const Index = () => {
                 <Card
                   key={index}
                   ref={(el) => (cardRefs.current[index] = el)}
-                  className={`p-6 md:p-8 shadow-soft backdrop-blur-sm border-2 ${roleColors[idea.role].bg} ${roleColors[idea.role].border} transition-smooth relative`}
+                  className={`p-6 md:p-8 shadow-soft backdrop-blur-sm border-2 ${roleColors[idea.category].bg} ${roleColors[idea.category].border} transition-smooth relative`}
                 >
                   <Button
                     onClick={() => handleExportCard(index)}
@@ -228,28 +228,32 @@ const Index = () => {
                   <div className="space-y-4 mt-8">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <h3 className={`text-2xl font-bold mb-2 ${roleColors[idea.role].text}`}>{idea.title}</h3>
-                        <Badge className={roleColors[idea.role].badge}>{idea.role}</Badge>
+                        <h3 className={`text-2xl font-bold mb-2 ${roleColors[idea.category].text}`}>{idea.solutionTitle}</h3>
+                        <Badge className={roleColors[idea.category].badge}>{idea.category}</Badge>
                       </div>
                     </div>
 
                     <div>
+                      <h4 className="font-semibold text-foreground mb-2">업무 프로세스</h4>
+                      <p className="text-foreground/80 text-sm">{idea.process}</p>
+                    </div>
+
+                    <div>
                       <h4 className="font-semibold text-foreground mb-2">AX 솔루션 아이디어 개요</h4>
-                      <p className="text-foreground/80 text-sm">{idea.description}</p>
+                      <p className="text-foreground/80 text-sm">{idea.solutionOverview}</p>
                     </div>
 
                     <div>
                       <h4 className="font-semibold text-foreground mb-2">사람의 역할</h4>
-                      <p className="text-foreground/80 text-sm">{idea.userRole}</p>
+                      <p className="text-foreground/80 text-sm">{idea.humanRole}</p>
                     </div>
 
                     <div>
                       <h4 className="font-semibold text-foreground mb-2">기대효과</h4>
-                      <p className="text-foreground/80 text-sm mb-2">{idea.expectedEffect}</p>
                       <ul className="list-disc list-inside space-y-1">
-                        {idea.effectDetails.map((detail, i) => (
-                          <li key={i} className="text-foreground/70 text-sm">
-                            {detail}
+                        {idea.expectedEffects.map((effect, i) => (
+                          <li key={i} className="text-foreground/80 text-sm">
+                            {effect}
                           </li>
                         ))}
                       </ul>
