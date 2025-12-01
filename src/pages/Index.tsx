@@ -25,20 +25,20 @@ const roleColors = {
     bg: "bg-success/10",
     border: "border-success",
     badge: "bg-success text-success-foreground",
-    text: "text-success"
+    text: "text-success",
   },
   Advisor: {
     bg: "bg-primary/10",
     border: "border-primary",
     badge: "bg-primary text-primary-foreground",
-    text: "text-primary"
+    text: "text-primary",
   },
   Agent: {
     bg: "bg-warning/10",
     border: "border-warning",
     badge: "bg-warning text-warning-foreground",
-    text: "text-warning"
-  }
+    text: "text-warning",
+  },
 };
 
 const Index = () => {
@@ -60,10 +60,10 @@ const Index = () => {
 
     try {
       const { data, error } = await supabase.functions.invoke("generate-ax-ideas", {
-        body: { 
+        body: {
           businessArea: businessArea.trim(),
           painPoints: painPoints.trim(),
-          expectations: expectations.trim()
+          expectations: expectations.trim(),
         },
       });
 
@@ -117,7 +117,7 @@ const Index = () => {
             <Sparkles className="w-7 h-7 text-primary-foreground" />
           </div>
           <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            SBL AX 과제 아이디어 생성기
+            삼성전자 DS AX 과제 아이디어 생성기
           </h1>
           <p className="text-base text-muted-foreground max-w-2xl mx-auto">
             업무 프로세스에 적용할 AI Transformation 솔루션 아이디어를 생성해보세요
@@ -204,9 +204,7 @@ const Index = () => {
 
             {ideas.length === 0 && !isLoading && (
               <Card className="p-12 text-center border-dashed border-2 border-border/50 bg-card/50 animate-in fade-in duration-700">
-                <p className="text-muted-foreground">
-                  왼쪽에 정보를 입력하고 아이디어를 생성해보세요
-                </p>
+                <p className="text-muted-foreground">왼쪽에 정보를 입력하고 아이디어를 생성해보세요</p>
               </Card>
             )}
 
@@ -230,9 +228,7 @@ const Index = () => {
                   <div className="space-y-4 mt-8">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <h3 className={`text-2xl font-bold mb-2 ${roleColors[idea.role].text}`}>
-                          {idea.title}
-                        </h3>
+                        <h3 className={`text-2xl font-bold mb-2 ${roleColors[idea.role].text}`}>{idea.title}</h3>
                         <Badge className={roleColors[idea.role].badge}>{idea.role}</Badge>
                       </div>
                     </div>
@@ -252,7 +248,9 @@ const Index = () => {
                       <p className="text-foreground/80 text-sm mb-2">{idea.expectedEffect}</p>
                       <ul className="list-disc list-inside space-y-1">
                         {idea.effectDetails.map((detail, i) => (
-                          <li key={i} className="text-foreground/70 text-sm">{detail}</li>
+                          <li key={i} className="text-foreground/70 text-sm">
+                            {detail}
+                          </li>
                         ))}
                       </ul>
                     </div>
