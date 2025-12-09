@@ -4,7 +4,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, Sparkles, Download, Rocket, Brain, Lightbulb, Bot } from "lucide-react";
+import { Loader2, Sparkles, Download, Rocket, Brain, Lightbulb, Bot, RotateCcw } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import html2canvas from "html2canvas";
@@ -51,6 +51,18 @@ const Index = () => {
   const [ideas, setIdeas] = useState<AXIdea[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const handleResetInput = () => {
+    setBusinessArea("");
+    setPainPoints("");
+    setExpectations("");
+    toast.success("입력 정보가 초기화되었습니다");
+  };
+
+  const handleResetIdeas = () => {
+    setIdeas([]);
+    toast.success("아이디어가 초기화되었습니다");
+  };
 
   const handleGenerate = async () => {
     if (!businessArea.trim() || !painPoints.trim() || !expectations.trim()) {
@@ -155,14 +167,26 @@ const Index = () => {
             <Card className="glass-strong shadow-card rounded-2xl overflow-hidden">
               <div className="p-6 md:p-8 space-y-6">
                 {/* Form Header */}
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-button flex items-center justify-center">
-                    <Sparkles className="w-5 h-5 text-primary-foreground" />
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-button flex items-center justify-center">
+                      <Sparkles className="w-5 h-5 text-primary-foreground" />
+                    </div>
+                    <div>
+                      <h2 className="font-semibold text-foreground">정보 입력</h2>
+                      <p className="text-sm text-muted-foreground">아이디어 생성을 위한 정보를 입력하세요</p>
+                    </div>
                   </div>
-                  <div>
-                    <h2 className="font-semibold text-foreground">정보 입력</h2>
-                    <p className="text-sm text-muted-foreground">아이디어 생성을 위한 정보를 입력하세요</p>
-                  </div>
+                  <Button
+                    onClick={handleResetInput}
+                    variant="ghost"
+                    size="sm"
+                    className="rounded-lg text-muted-foreground hover:text-foreground"
+                    disabled={isLoading || (!businessArea && !painPoints && !expectations)}
+                  >
+                    <RotateCcw className="w-4 h-4 mr-1.5" />
+                    초기화
+                  </Button>
                 </div>
 
                 {/* Business Area */}
@@ -243,14 +267,25 @@ const Index = () => {
           >
             {/* Results Header */}
             {ideas.length > 0 && (
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-success/20 flex items-center justify-center">
-                  <Lightbulb className="w-5 h-5 text-success" />
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-success/20 flex items-center justify-center">
+                    <Lightbulb className="w-5 h-5 text-success" />
+                  </div>
+                  <div>
+                    <h2 className="font-semibold text-foreground">생성된 아이디어</h2>
+                    <p className="text-sm text-muted-foreground">{ideas.length}개의 AX 솔루션 아이디어</p>
+                  </div>
                 </div>
-                <div>
-                  <h2 className="font-semibold text-foreground">생성된 아이디어</h2>
-                  <p className="text-sm text-muted-foreground">{ideas.length}개의 AX 솔루션 아이디어</p>
-                </div>
+                <Button
+                  onClick={handleResetIdeas}
+                  variant="ghost"
+                  size="sm"
+                  className="rounded-lg text-muted-foreground hover:text-foreground"
+                >
+                  <RotateCcw className="w-4 h-4 mr-1.5" />
+                  초기화
+                </Button>
               </div>
             )}
 
