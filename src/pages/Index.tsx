@@ -137,34 +137,38 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/20">
-      {/* Header Section - More Compact */}
-      <header className="relative overflow-hidden border-b border-border/40">
-        <div className="absolute inset-0 bg-gradient-header" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(var(--primary)/0.08)_0%,transparent_60%)]" />
-        
-        <div className="container mx-auto px-4 py-6 md:py-8 relative">
-          <div 
-            className="max-w-4xl mx-auto text-center opacity-0 animate-fade-in-up"
-            style={{ animationDelay: "0.1s" }}
-          >
-            {/* Icon Badge */}
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-button shadow-button mb-4 animate-float">
-              <Rocket className="w-6 h-6 text-primary-foreground" />
+    <div className="min-h-screen relative">
+      {/* Unified Gradient Background */}
+      <div className="fixed inset-0 bg-gradient-to-br from-blue-50 via-sky-50/50 to-indigo-50/30 dark:from-slate-950 dark:via-blue-950/30 dark:to-slate-900" />
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top_left,hsl(210_100%_50%/0.08)_0%,transparent_50%)]" />
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_bottom_right,hsl(200_90%_50%/0.06)_0%,transparent_50%)]" />
+      
+      {/* Content */}
+      <div className="relative z-10">
+        {/* Header Section - More Compact */}
+        <header className="relative">
+          <div className="container mx-auto px-4 py-6 md:py-8">
+            <div 
+              className="max-w-4xl mx-auto text-center opacity-0 animate-fade-in-up"
+              style={{ animationDelay: "0.1s" }}
+            >
+              {/* Icon Badge */}
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg shadow-blue-500/25 mb-4 animate-float">
+                <Rocket className="w-6 h-6 text-white" />
+              </div>
+              
+              {/* Title */}
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2 bg-gradient-to-r from-blue-600 via-blue-500 to-sky-500 bg-clip-text text-transparent">
+                삼성전자 DS AX 과제 아이디어 생성기
+              </h1>
+              
+              {/* Subtitle */}
+              <p className="text-sm md:text-base text-slate-600 dark:text-slate-400 max-w-xl mx-auto">
+                업무 프로세스에 적용할 AI Transformation 솔루션 아이디어를 생성해보세요
+              </p>
             </div>
-            
-            {/* Title */}
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-              삼성전자 DS AX 과제 아이디어 생성기
-            </h1>
-            
-            {/* Subtitle */}
-            <p className="text-sm md:text-base text-muted-foreground max-w-xl mx-auto">
-              업무 프로세스에 적용할 AI Transformation 솔루션 아이디어를 생성해보세요
-            </p>
           </div>
-        </div>
-      </header>
+        </header>
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-6 md:py-10 max-w-7xl">
@@ -174,17 +178,17 @@ const Index = () => {
             className="lg:col-span-5 opacity-0 animate-fade-in-left"
             style={{ animationDelay: "0.2s" }}
           >
-            <Card className="bg-card/80 backdrop-blur-sm shadow-card rounded-2xl overflow-hidden border border-border/60 sticky top-6">
+            <Card className="bg-white/70 dark:bg-slate-900/70 backdrop-blur-md shadow-xl shadow-blue-900/5 rounded-2xl overflow-hidden border border-blue-100 dark:border-blue-900/50 sticky top-6">
               <div className="p-6 md:p-8">
                 {/* Form Header */}
-                <div className="flex items-center justify-between mb-6 pb-4 border-b border-border/40">
+                <div className="flex items-center justify-between mb-6 pb-4 border-b border-blue-100 dark:border-blue-900/50">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-button flex items-center justify-center shadow-sm">
-                      <FileText className="w-5 h-5 text-primary-foreground" />
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-md shadow-blue-500/20">
+                      <FileText className="w-5 h-5 text-white" />
                     </div>
                     <div>
-                      <h2 className="font-semibold text-lg text-foreground">정보 입력</h2>
-                      <p className="text-xs text-muted-foreground">AX 아이디어 생성을 위한 정보</p>
+                      <h2 className="font-semibold text-lg text-slate-800 dark:text-slate-100">정보 입력</h2>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">AX 아이디어 생성을 위한 정보</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
@@ -192,7 +196,7 @@ const Index = () => {
                       onClick={handleLoadExample}
                       variant="ghost"
                       size="sm"
-                      className="rounded-lg text-primary hover:text-primary hover:bg-primary/10 text-xs"
+                      className="rounded-lg text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-950/50 text-xs"
                       disabled={isLoading}
                     >
                       <Zap className="w-3.5 h-3.5 mr-1" />
@@ -202,7 +206,7 @@ const Index = () => {
                       onClick={handleResetInput}
                       variant="ghost"
                       size="sm"
-                      className="rounded-lg text-muted-foreground hover:text-foreground text-xs"
+                      className="rounded-lg text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 text-xs"
                       disabled={isLoading || (!businessArea && !painPoints && !expectations)}
                     >
                       <RotateCcw className="w-3.5 h-3.5 mr-1" />
@@ -211,18 +215,18 @@ const Index = () => {
                   </div>
                 </div>
 
-                {/* Step 1: 업무 정보 입력 */}
+                {/* 업무 정보 입력 */}
                 <div className="space-y-6">
                   <div>
-                    <div className="flex items-center gap-2 mb-4">
-                      <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-semibold">1</span>
-                      <h3 className="font-medium text-foreground">업무 정보 입력</h3>
-                    </div>
+                    <h3 className="font-semibold text-slate-700 dark:text-slate-200 mb-4 flex items-center gap-2">
+                      <span className="w-1 h-5 bg-blue-500 rounded-full"></span>
+                      업무 정보 입력
+                    </h3>
                     
-                    <div className="space-y-5 pl-8">
+                    <div className="space-y-5">
                       {/* Business Area */}
                       <div className="space-y-2">
-                        <label htmlFor="businessArea" className="text-sm font-medium text-foreground">
+                        <label htmlFor="businessArea" className="text-sm font-medium text-slate-700 dark:text-slate-300">
                           업무 영역
                         </label>
                         <Input
@@ -230,14 +234,14 @@ const Index = () => {
                           placeholder="예: 생산계획, 품질관리, 설비점검, 물류 운영 등"
                           value={businessArea}
                           onChange={(e) => setBusinessArea(e.target.value)}
-                          className="bg-background border-border/60 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl h-11 transition-all duration-200"
+                          className="bg-white dark:bg-slate-800 border-blue-200 dark:border-blue-800 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 rounded-xl h-11 transition-all duration-200"
                           disabled={isLoading}
                         />
                       </div>
 
                       {/* Pain Points */}
                       <div className="space-y-2">
-                        <label htmlFor="painPoints" className="text-sm font-medium text-foreground">
+                        <label htmlFor="painPoints" className="text-sm font-medium text-slate-700 dark:text-slate-300">
                           현행 업무 고충 및 한계점
                         </label>
                         <Textarea
@@ -245,14 +249,14 @@ const Index = () => {
                           placeholder="예: 데이터 수집 수작업, 시스템 간 연결 미흡, 재작업 발생 등"
                           value={painPoints}
                           onChange={(e) => setPainPoints(e.target.value)}
-                          className="min-h-[100px] resize-none bg-background border-border/60 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl transition-all duration-200 leading-relaxed"
+                          className="min-h-[100px] resize-none bg-white dark:bg-slate-800 border-blue-200 dark:border-blue-800 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 rounded-xl transition-all duration-200 leading-relaxed"
                           disabled={isLoading}
                         />
                       </div>
 
                       {/* Expectations */}
                       <div className="space-y-2">
-                        <label htmlFor="expectations" className="text-sm font-medium text-foreground">
+                        <label htmlFor="expectations" className="text-sm font-medium text-slate-700 dark:text-slate-300">
                           AX 도입을 통한 기대 사항
                         </label>
                         <Textarea
@@ -260,25 +264,25 @@ const Index = () => {
                           placeholder="예: 업무 효율화, 오류 감소, 자동화, 실시간 모니터링 등"
                           value={expectations}
                           onChange={(e) => setExpectations(e.target.value)}
-                          className="min-h-[100px] resize-none bg-background border-border/60 focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl transition-all duration-200 leading-relaxed"
+                          className="min-h-[100px] resize-none bg-white dark:bg-slate-800 border-blue-200 dark:border-blue-800 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 rounded-xl transition-all duration-200 leading-relaxed"
                           disabled={isLoading}
                         />
                       </div>
                     </div>
                   </div>
 
-                  {/* Step 2: 아이디어 생성 */}
-                  <div className="pt-4 border-t border-border/40">
-                    <div className="flex items-center gap-2 mb-4">
-                      <span className="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-semibold">2</span>
-                      <h3 className="font-medium text-foreground">아이디어 생성</h3>
-                    </div>
+                  {/* 아이디어 생성 */}
+                  <div className="pt-5 border-t border-blue-100 dark:border-blue-900/50">
+                    <h3 className="font-semibold text-slate-700 dark:text-slate-200 mb-4 flex items-center gap-2">
+                      <span className="w-1 h-5 bg-blue-500 rounded-full"></span>
+                      아이디어 생성
+                    </h3>
                     
-                    <div className="pl-8">
+                    <div>
                       <Button
                         onClick={handleGenerate}
                         disabled={isLoading || !businessArea.trim() || !painPoints.trim() || !expectations.trim()}
-                        className="w-full h-12 text-base font-semibold rounded-xl bg-gradient-button hover:shadow-button hover:brightness-110 active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:hover:brightness-100"
+                        className="w-full h-12 text-base font-semibold rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:shadow-none"
                         size="lg"
                       >
                         {isLoading ? (
@@ -293,7 +297,7 @@ const Index = () => {
                           </>
                         )}
                       </Button>
-                      <p className="text-xs text-muted-foreground text-center mt-3">
+                      <p className="text-xs text-slate-500 dark:text-slate-400 text-center mt-3">
                         AI가 3가지 유형의 AX 솔루션 아이디어를 생성합니다
                       </p>
                     </div>
@@ -312,19 +316,19 @@ const Index = () => {
             {ideas.length > 0 && (
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
-                    <Lightbulb className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                  <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+                    <Lightbulb className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                   </div>
                   <div>
-                    <h2 className="font-semibold text-lg text-foreground">생성된 아이디어</h2>
-                    <p className="text-xs text-muted-foreground">{ideas.length}개의 AX 솔루션 아이디어가 생성되었습니다</p>
+                    <h2 className="font-semibold text-lg text-slate-800 dark:text-slate-100">생성된 아이디어</h2>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">{ideas.length}개의 AX 솔루션 아이디어가 생성되었습니다</p>
                   </div>
                 </div>
                 <Button
                   onClick={handleResetIdeas}
                   variant="ghost"
                   size="sm"
-                  className="rounded-lg text-muted-foreground hover:text-foreground text-xs"
+                  className="rounded-lg text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 text-xs"
                 >
                   <RotateCcw className="w-3.5 h-3.5 mr-1" />
                   초기화
@@ -334,13 +338,13 @@ const Index = () => {
 
             {/* Empty State */}
             {ideas.length === 0 && !isLoading && (
-              <Card className="bg-card/50 backdrop-blur-sm rounded-2xl border-dashed border-2 border-border/50">
+              <Card className="bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm rounded-2xl border-dashed border-2 border-blue-200 dark:border-blue-800">
                 <div className="p-10 md:p-14 text-center">
-                  <div className="w-14 h-14 rounded-2xl bg-muted/50 flex items-center justify-center mx-auto mb-5">
-                    <Lightbulb className="w-7 h-7 text-muted-foreground/50" />
+                  <div className="w-14 h-14 rounded-2xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mx-auto mb-5">
+                    <Lightbulb className="w-7 h-7 text-blue-400" />
                   </div>
-                  <h3 className="text-base font-medium text-foreground mb-2">아이디어를 생성해보세요</h3>
-                  <p className="text-sm text-muted-foreground max-w-sm mx-auto leading-relaxed">
+                  <h3 className="text-base font-medium text-slate-800 dark:text-slate-100 mb-2">아이디어를 생성해보세요</h3>
+                  <p className="text-sm text-slate-500 dark:text-slate-400 max-w-sm mx-auto leading-relaxed">
                     왼쪽에 업무 영역과 고충점, 기대 사항을 입력하고<br />아이디어 생성 버튼을 클릭하세요
                   </p>
                 </div>
@@ -349,13 +353,13 @@ const Index = () => {
 
             {/* Loading State */}
             {isLoading && (
-              <Card className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/60">
+              <Card className="bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm rounded-2xl border border-blue-200 dark:border-blue-800">
                 <div className="p-10 md:p-14 text-center">
-                  <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-5 animate-pulse">
-                    <Sparkles className="w-7 h-7 text-primary" />
+                  <div className="w-14 h-14 rounded-2xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mx-auto mb-5 animate-pulse">
+                    <Sparkles className="w-7 h-7 text-blue-500" />
                   </div>
-                  <h3 className="text-base font-medium text-foreground mb-2">AI가 아이디어를 생성하고 있습니다</h3>
-                  <p className="text-sm text-muted-foreground">잠시만 기다려주세요...</p>
+                  <h3 className="text-base font-medium text-slate-800 dark:text-slate-100 mb-2">AI가 아이디어를 생성하고 있습니다</h3>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">잠시만 기다려주세요...</p>
                 </div>
               </Card>
             )}
@@ -370,7 +374,7 @@ const Index = () => {
                   <Card
                     key={index}
                     ref={(el) => (cardRefs.current[index] = el)}
-                    className={`rounded-2xl shadow-card overflow-hidden border ${colors.bg} ${colors.border} opacity-0 animate-fade-in-up`}
+                    className={`rounded-2xl shadow-xl shadow-slate-900/5 overflow-hidden border ${colors.bg} ${colors.border} opacity-0 animate-fade-in-up`}
                     style={{ animationDelay: `${0.1 * (index + 1)}s` }}
                   >
                     {/* Card Content */}
@@ -404,28 +408,28 @@ const Index = () => {
                       {/* Content Grid */}
                       <div className="grid md:grid-cols-2 gap-6">
                         <div className="space-y-5">
-                          <div>
-                            <h4 className="font-semibold text-foreground text-sm mb-2">업무 프로세스</h4>
-                            <p className="text-foreground/80 text-sm leading-[1.6]">{idea.process}</p>
+                          <div className="bg-white/50 dark:bg-slate-800/30 rounded-xl p-4">
+                            <h4 className="font-semibold text-slate-700 dark:text-slate-200 text-sm mb-2">업무 프로세스</h4>
+                            <p className="text-slate-600 dark:text-slate-300 text-sm leading-[1.65]">{idea.process}</p>
                           </div>
 
-                          <div>
-                            <h4 className="font-semibold text-foreground text-sm mb-2">AX 솔루션 개요</h4>
-                            <p className="text-foreground/80 text-sm leading-[1.6]">{idea.solutionOverview}</p>
+                          <div className="bg-white/50 dark:bg-slate-800/30 rounded-xl p-4">
+                            <h4 className="font-semibold text-slate-700 dark:text-slate-200 text-sm mb-2">AX 솔루션 개요</h4>
+                            <p className="text-slate-600 dark:text-slate-300 text-sm leading-[1.65]">{idea.solutionOverview}</p>
                           </div>
 
-                          <div>
-                            <h4 className="font-semibold text-foreground text-sm mb-2">사람의 역할</h4>
-                            <p className="text-foreground/80 text-sm leading-[1.6]">{idea.humanRole}</p>
+                          <div className="bg-white/50 dark:bg-slate-800/30 rounded-xl p-4">
+                            <h4 className="font-semibold text-slate-700 dark:text-slate-200 text-sm mb-2">사람의 역할</h4>
+                            <p className="text-slate-600 dark:text-slate-300 text-sm leading-[1.65]">{idea.humanRole}</p>
                           </div>
                         </div>
 
-                        <div className="space-y-5">
-                          <div>
-                            <h4 className="font-semibold text-foreground text-sm mb-2">기대효과</h4>
+                        <div className="space-y-4">
+                          <div className="bg-white/50 dark:bg-slate-800/30 rounded-xl p-4">
+                            <h4 className="font-semibold text-slate-700 dark:text-slate-200 text-sm mb-2">기대효과</h4>
                             <ul className="space-y-1.5">
                               {idea.expectedEffects.map((effect, i) => (
-                                <li key={i} className="text-foreground/80 text-sm flex items-start gap-2 leading-[1.6]">
+                                <li key={i} className="text-slate-600 dark:text-slate-300 text-sm flex items-start gap-2 leading-[1.65]">
                                   <span className={`w-1.5 h-1.5 rounded-full ${colors.badge} mt-2 flex-shrink-0`} />
                                   {effect}
                                 </li>
@@ -433,8 +437,8 @@ const Index = () => {
                             </ul>
                           </div>
 
-                          <div>
-                            <h4 className="font-semibold text-foreground text-sm mb-2.5">키워드</h4>
+                          <div className="bg-white/50 dark:bg-slate-800/30 rounded-xl p-4">
+                            <h4 className="font-semibold text-slate-700 dark:text-slate-200 text-sm mb-2.5">키워드</h4>
                             <div className="flex flex-wrap gap-2">
                               {idea.keywords.map((keyword, i) => (
                                 <Badge key={i} className={`${colors.badgeLight} text-xs rounded-full px-3 py-1 font-normal`}>
@@ -444,8 +448,8 @@ const Index = () => {
                             </div>
                           </div>
 
-                          <div>
-                            <h4 className="font-semibold text-foreground text-sm mb-2.5">기술</h4>
+                          <div className="bg-white/50 dark:bg-slate-800/30 rounded-xl p-4">
+                            <h4 className="font-semibold text-slate-700 dark:text-slate-200 text-sm mb-2.5">기술</h4>
                             <div className="flex flex-wrap gap-2">
                               {idea.technologies.map((tech, i) => (
                                 <Badge key={i} variant="outline" className="text-xs rounded-full px-3 py-1 font-normal border-border/80">
@@ -464,6 +468,7 @@ const Index = () => {
           </div>
         </div>
       </main>
+      </div>
     </div>
   );
 };
