@@ -8,7 +8,7 @@ import { Loader2, Sparkles, Download, Rocket, Brain, Lightbulb, Bot, RotateCcw, 
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import html2canvas from "html2canvas";
-
+import TopNavigation from "@/components/TopNavigation";
 interface AXIdea {
   solutionTitle: string;
   process: string;
@@ -143,6 +143,9 @@ const Index = () => {
       <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top_left,hsl(210_100%_50%/0.08)_0%,transparent_50%)]" />
       <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_bottom_right,hsl(200_90%_50%/0.06)_0%,transparent_50%)]" />
       
+      {/* Navigation */}
+      <TopNavigation />
+
       {/* Content */}
       <div className="relative z-10">
         {/* Header Section - More Compact */}
